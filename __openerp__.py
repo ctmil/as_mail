@@ -23,7 +23,8 @@
     "depends": ["base","mail","mail_tracking"],
     "init_xml": [],
     "data": [
-	'as_mail.xml'
+	'as_mail.xml',
+	'security/as_mail_security.xml'
     ],
     'demo_xml': [
 	'as_mail.xml'
