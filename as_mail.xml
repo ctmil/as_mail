@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+        <!-- just a declaration -->
+        <record model="ir.ui.view" id="view_mail_tracking_email_form_sender">
+            <field name="name">view.mail.tracking.email.form.sender</field>
+            <field name="inherit_id" ref="mail_tracking.view_mail_tracking_email_form"/>
+            <field name="model">mail.tracking.email</field>
+            <field name="arch" type="xml">
+		<field name="sender" position="after">
+			<field name="sender_partner_id" readonly="1" />
+		</field>
+            </field>
+        </record>
+
+   </data>
+</openerp>
