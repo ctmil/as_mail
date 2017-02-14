@@ -12,6 +12,28 @@
 		</field>
             </field>
         </record>
+	  
+        <record id="as_mail_action_view_mail_message" model="ir.actions.act_window">
+            <field name="name">Messages</field>
+            <field name="res_model">mail.message</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- field name="domain">['|',('author_id', '=', user.partner_id.id)]</field -->
+            <field name="search_view_id" ref="mail.view_message_search"/>
+        </record>
+
+
+        <menuitem id="menuitem_as_mail"
+                parent="mail.mail_channel_menu_root_chat"
+                name="Mensajes" />
+
+        <menuitem id="menuitem_as_mensajes"
+                parent="as_mail.menuitem_as_mail"
+                name="Mensajes" 
+                action="as_mail_action_view_mail_message"
+                />
+
+
 
    </data>
 </openerp>
