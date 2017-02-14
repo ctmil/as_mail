@@ -14,26 +14,61 @@ from openerp.fields import Date as newdate
 _logger = logging.getLogger(__name__)
 
 class mail_tracking_email(models.Model):
-	_inherit = 'mail.tracking.email'
+        _inherit = 'mail.tracking.email'
 
-	#@api.one
-	#def _compute_sender_partner_id(self):
-	#@api.one
-	#@api.onchange('sender')
-	@api.model
-	#def _compute_sender_partner_id(self):
-	def create(self, vals):
-		if 'sender' in vals.keys():
-			#import pdb;pdb.set_trace()
-			sender = vals['sender']
-			position_start = sender.find('<')
-			intermediate_sender = sender[position_start + 1:]
-			final_sender = intermediate_sender[:len(intermediate_sender)-1]
-			partners = self.env['res.partner'].search([('email','=',final_sender)])
-			if partners:
-				vals['sender_partner_id'] = partners[0].id
-		return super(mail_tracking_email, self).create(vals)
+        #@api.one
+        #def _compute_sender_partner_id(self):
+        #@api.one
+        #@api.onchange('sender')
+        @api.model
+        #def _compute_sender_partner_id(self):
+        def create(self, vals):
+                if 'sender' in vals.keys():
+                        #import pdb;pdb.set_trace()
+                        sender = vals['sender']
+                        position_start = sender.find('<')
+                        intermediate_sender = sender[position_start + 1:]
+                        final_sender = intermediate_sender[:len(intermediate_sender)-1]
+                        partners = self.env['res.partner'].search([('email','=',final_sender)])
+                        if partners:
+                                vals['sender_partner_id'] = partners[0].id
+                return super(mail_tracking_email, self).create(vals)
 
-	#sender_partner_id = fields.Many2one('res.partner',related='mail_message_id.author_id')
-	#sender_partner_id = fields.Many2one('res.partner',compute=_compute_sender_partner_id,store=True)
-	sender_partner_id = fields.Many2one('res.partner')
+        #sender_partner_id = fields.Many2one('res.partner',related='mail_message_id.author_id')
+
+	
+
+class mail_message(models.Model):
+        _inherit = 'mail.message'
+
+        @api.one
+        def _compute_mail_owner(self):
+                #if self.id == 25652:
+                #       import pdb;pdb.set_trace()
+                return_value = False
+                uid = self.env.context['uid']
+                user_uid = self.env['res.users'].browse(uid)
+                partner_uid = user_uid.partner_id.id
+                if self.author_id.id == user_uid.partner_id.id:
+                        return_value = True
+                else:
+                        if partner_uid in self.partner_ids.ids:
+                                return_value = True
+                self.mail_owner = return_value
+
+        @api.one
+        def _compute_partner_ids_char_v3(self):
+                if self.partner_ids:
+                        #import pdb;pdb.set_trace()
+                        partner_ids_ids = [str(c) for c in self.partner_ids.ids]
+                        return_value = ','.join(partner_ids_ids)
+                        self.partner_ids_char_v3 = return_value
+
+        @api.one
+        def _compute_original_author_id(self):
+                if self.parent_id:
+                        self.original_author_id = self.parent_id.author_id.id
+
+        partner_ids_char_v3 = fields.Char('Partners Char',compute=_compute_partner_ids_char_v3)
+        mail_owner = fields.Boolean('Mail Owner',compute=_compute_mail_owner)
+        original_author_id = fields.Many2one('res.partner',string='Original Author',compute=_compute_original_author_id,store=True)
