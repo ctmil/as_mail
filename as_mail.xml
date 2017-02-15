@@ -13,7 +13,7 @@
             </field>
         </record>
 	  
-        <record id="as_mail_action_view_mail_message" model="ir.actions.act_window">
+        <record id="as_mail_action_view_as_mail_message" model="ir.actions.act_window">
             <field name="name">Messages</field>
             <field name="res_model">as.mail.message</field>
             <field name="view_type">form</field>
@@ -30,7 +30,7 @@
         <menuitem id="menuitem_as_mensajes"
                 parent="as_mail.menuitem_as_mail"
                 name="Mensajes" 
-                action="as_mail_action_view_mail_message"
+                action="as_mail_action_view_as_mail_message"
                 />
 
 
