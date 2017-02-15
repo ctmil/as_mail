@@ -12,6 +12,21 @@
 		</field>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="as_mail_message_tree">
+            <field name="name">as.mail.message.tree</field>
+            <field name="model">as.mail.message</field>
+            <field name="arch" type="xml">
+		<tree string="Mensajes">
+			<field name="date" />
+			<field name="author_id" />
+			<field name="res_partner_id" />
+			<field name="email_from" />
+			<field name="subject" />
+			<field name="message_id" />
+		</tree>
+            </field>
+        </record>
 	  
         <record id="as_mail_action_view_as_mail_message" model="ir.actions.act_window">
             <field name="name">Messages</field>
