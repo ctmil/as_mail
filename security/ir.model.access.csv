@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_as_mail_message_all,as_mail.message.all,model_as_mail_message,,1,0,0,0

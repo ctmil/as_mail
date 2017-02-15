@@ -25,6 +25,7 @@
     "data": [
 	'as_mail.xml',
 	'security/as_mail_security.xml'
+	'security/ir.model.access.csv'
     ],
     'demo_xml': [
 	'as_mail.xml'

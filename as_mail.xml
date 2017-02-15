@@ -23,7 +23,7 @@
 			<field name="res_partner_id" />
 			<field name="email_from" />
 			<field name="subject" />
-			<field name="message_id" />
+			<field name="mail_message_id" />
 		</tree>
             </field>
         </record>
