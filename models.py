@@ -34,12 +34,39 @@ class mail_tracking_email(models.Model):
                                 vals['sender_partner_id'] = partners[0].id
                 return super(mail_tracking_email, self).create(vals)
 
-        #sender_partner_id = fields.Many2one('res.partner',related='mail_message_id.author_id')
+        sender_partner_id = fields.Many2one('res.partner',related='mail_message_id.author_id')
 
-	
 
 class mail_message(models.Model):
         _inherit = 'mail.message'
+
+	"""	
+	@api.model
+	def message_fetch(self, domain, limit=20):
+		new_domain = []
+		constraints = ['create_date','needaction']
+		for  idx_domain in domain:
+			if idx_domain[0] not in constraints:
+				new_domain.append(idx_domain)
+		resultados = None
+		if new_domain == [] or new_domain[0] == ('channel_id','in',[]):
+			uid  = self.env.context['uid']
+			user = self.env['res.users'].browse(uid)
+			partner_id = user.partner_id.id
+			new_domain = [('author_id','=',partner_id)]
+			resultados = self.search(new_domain, limit=limit).message_format()
+			index = 0
+			for resultado in resultados:
+				channel = resultado.get('channel_id',None)
+				if not channel:
+					resultados[index]['channel_id'] = [3]
+				index = index + 1
+		new_domain.append(('message_type','=','comment'))
+		if not resultados:
+			return self.search(new_domain,limit=limit).message_format()
+		else:
+			return resultados
+	"""
 
         @api.one
         def _compute_mail_owner(self):
