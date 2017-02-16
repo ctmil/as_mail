@@ -13,6 +13,27 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="as_mail_message_form">
+            <field name="name">as.mail.message.form</field>
+            <field name="model">as.mail.message</field>
+            <field name="arch" type="xml">
+		<form string="Mensaje">
+			<group>
+				<field name="subject" />
+				<field name="date" readonly="1"/>
+			</group>
+			<group string="Emisores y Destinatarios">
+				<field name="author_id" />
+				<field name="res_partner_id" />
+				<field name="email_from" />
+			</group>
+			<group string="Contenido">
+				<field name="body" widget="html"/>
+			</group>
+		</form>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="as_mail_message_tree">
             <field name="name">as.mail.message.tree</field>
             <field name="model">as.mail.message</field>
