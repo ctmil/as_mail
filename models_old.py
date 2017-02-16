@@ -8,6 +8,11 @@ import datetime
 class fetchmail_server(osv.osv):
 	_inherit = 'fetchmail.server'
 
+	def _fetch_mails_all(self, cr, uid, ids=False, context=None):
+	        if not ids:
+	            ids = self.search(cr, uid, [('state','=','done'),('type','in',['pop','imap'])])
+                return self.fetch_mail_all(cr, uid, ids, context=context)
+
 
 	def fetch_mail_all(self, cr, uid, ids, context=None):
 	        """WARNING: meant for cron usage only - will commit() after each email!"""
