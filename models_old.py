@@ -160,6 +160,6 @@ class as_mail_message(osv.osv):
 			from mail_message a 
 			where a.message_type in ('comment','email') 
 			and a.id not in (select mail_message_id from mail_message_res_partner_rel) 
-			and a.id not in (select mail_message_id from mail_mssage_res_partner_starred_rel)
+			and a.id not in (select mail_message_id from mail_message_res_partner_starred_rel)
 	        	""")
                                                  
