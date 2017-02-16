@@ -6,6 +6,7 @@ import datetime
 import logging
 import poplib
 import time
+import email
 from imaplib import IMAP4
 from imaplib import IMAP4_SSL
 from poplib import POP3
@@ -57,24 +58,29 @@ class fetchmail_server(osv.osv):
 			    # result, data = mail.uid('search', None, '(SENTSINCE {date})'.format(date=date))
                 	    # result, data = imap_server.search(None, '(UNSEEN)')
                 	    result, data = imap_server.search(None, '(SENTSINCE {date})'.format(date=date))
-			    import pdb;pdb.set_trace()
 	                    for num in data[0].split():
         	                res_id = None
                 	        result, data = imap_server.fetch(num, '(RFC822)')
-	                        imap_server.store(num, '-FLAGS', '\\Seen')
-        	                try:
-                	            res_id = mail_thread.message_process(cr, uid, server.object_id.model,
+		                raw_email = data[0][1]
+                		email_message = email.message_from_string(raw_email)
+				message-id = email_message['Message-ID']
+				mail_message_id = self.pool.get('mail.message').search([('message_id','=',message-id)])
+ 			        import pdb;pdb.set_trace()
+				if not mail_message_id:
+		                        #imap_server.store(num, '-FLAGS', '\\Seen')
+        		                try:
+                		            res_id = mail_thread.message_process(cr, uid, server.object_id.model,
                         	                                         data[0][1],
                                 	                                 save_original=server.original,
                                         	                         strip_attachments=(not server.attach),
                                                 	                 context=context)
-	                        except Exception:
-        	                    _logger.info('Failed to process mail from %s server %s.', server.type, server.name, exc_info=True)
-                	            failed += 1
-                        	if res_id and server.action_id:
-	                            action_pool.run(cr, uid, [server.action_id.id], {'active_id': res_id, 'active_ids': [res_id], 'active_model': context.get("thread_model", server.object_id.model)})
-        	                imap_server.store(num, '+FLAGS', '\\Seen')
-                	        cr.commit()
+	                	        except Exception:
+        	                	    _logger.info('Failed to process mail from %s server %s.', server.type, server.name, exc_info=True)
+	                	            failed += 1
+        	                	if res_id and server.action_id:
+	        	                    action_pool.run(cr, uid, [server.action_id.id], {'active_id': res_id, 'active_ids': [res_id], 'active_model': context.get("thread_model", server.object_id.model)})
+        	                # imap_server.store(num, '+FLAGS', '\\Seen')
+                		        cr.commit()
 	                        count += 1
         	            _logger.info("Fetched %d email(s) on %s server %s; %d succeeded, %d failed.", count, server.type, server.name, (count - failed), failed)
                 	except Exception:
