@@ -148,5 +148,9 @@ class as_mail_message(osv.osv):
 			select a.mail_message_id * a.res_partner_id as id,a.mail_message_id as mail_message_id,a.res_partner_id as res_partner_id,b.author_id as author_id,b.message_type as message_type, 
 			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body from mail_message_res_partner_rel a inner join mail_message b on a.mail_message_id = b.id
 			where b.message_type in ('comment','email')
+			union
+			select a.mail_message_id * a.res_partner_id as id,a.mail_message_id as mail_message_id,a.res_partner_id as res_partner_id,b.author_id as author_id,b.message_type as message_type, 
+			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body from mail_message_res_partner_starred_rel a inner join mail_message b on a.mail_message_id = b.id
+			where b.message_type in ('comment','email')
 	        	""")
                                                  
