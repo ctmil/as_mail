@@ -63,9 +63,8 @@ class fetchmail_server(osv.osv):
                 	        result, data = imap_server.fetch(num, '(RFC822)')
 		                raw_email = data[0][1]
                 		email_message = email.message_from_string(raw_email)
- 			        import pdb;pdb.set_trace()
 				message_id = email_message['Message-ID']
-				mail_message_id = self.pool.get('mail.message').search([('message_id','=',message_id)])
+				mail_message_id = self.pool.get('mail.message').search(cr,uid,[('message_id','=',message_id)])
 				if not mail_message_id:
 		                        #imap_server.store(num, '-FLAGS', '\\Seen')
         		                try:
