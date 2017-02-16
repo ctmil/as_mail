@@ -20,7 +20,7 @@
 {
     "name": "AS Mail",
     "category": "Generic Modules/Projects & Services",
-    "depends": ["base","mail","mail_tracking"],
+    "depends": ["base","mail","mail_tracking","fetchmail"],
     "init_xml": [],
     "data": [
 	'as_mail.xml',
