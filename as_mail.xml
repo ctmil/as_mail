@@ -41,7 +41,6 @@
 		<tree string="Mensajes">
 			<field name="date" />
 			<field name="author_id" />
-			<field name="original_author_id" />
 			<field name="res_partner_id" />
 			<field name="email_from" />
 			<field name="subject" />
