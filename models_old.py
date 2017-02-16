@@ -1,9 +1,32 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from openerp.osv import fields, osv
 from openerp import tools
 import datetime
+import logging
+import poplib
+import time
+from imaplib import IMAP4
+from imaplib import IMAP4_SSL
+from poplib import POP3
+from poplib import POP3_SSL
+try:
+    import cStringIO as StringIO
+except ImportError:
+    import StringIO
+
+from openerp.osv import fields, osv
+from openerp import tools, api, SUPERUSER_ID
+from openerp.tools.translate import _
+from openerp.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
+MAX_POP_MESSAGES = 50
+MAIL_TIMEOUT = 60
+
+# Workaround for Python 2.7.8 bug https://bugs.python.org/issue23906
+poplib._MAXLINE = 65536
+
 
 class fetchmail_server(osv.osv):
 	_inherit = 'fetchmail.server'
@@ -16,7 +39,6 @@ class fetchmail_server(osv.osv):
 
 	def fetch_mail_all(self, cr, uid, ids, context=None):
 	        """WARNING: meant for cron usage only - will commit() after each email!"""
-		import pdb;pdb.set_trace()
         	context = dict(context or {})
 	        context['fetchmail_cron_running'] = True
         	mail_thread = self.pool.get('mail.thread')
