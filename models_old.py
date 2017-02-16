@@ -11,6 +11,7 @@ class fetchmail_server(osv.osv):
 
 	def fetch_mail_all(self, cr, uid, ids, context=None):
 	        """WARNING: meant for cron usage only - will commit() after each email!"""
+		import pdb;pdb.set_trace()
         	context = dict(context or {})
 	        context['fetchmail_cron_running'] = True
         	mail_thread = self.pool.get('mail.thread')
@@ -88,7 +89,7 @@ class fetchmail_server(osv.osv):
 	                    if pop_server:
         	                pop_server.quit()
 	            server.write({'date': time.strftime(tools.DEFAULT_SERVER_DATETIME_FORMAT)})
-	       return True
+	        return True
 
 class as_mail_message(osv.osv):
 	_name = "as.mail.message"
