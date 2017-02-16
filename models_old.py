@@ -154,5 +154,12 @@ class as_mail_message(osv.osv):
 			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body
 			from mail_message_res_partner_starred_rel a inner join mail_message b on a.mail_message_id = b.id
 			where b.message_type in ('comment','email')
+			union
+			select a.id * a.author_id as id,a.id as mail_message_id,NULL as res_partner_id,a.author_id as author_id,a.message_type as message_type, 
+			a.subject as subject, a.email_from as email_from,a.date as date,a.body as body
+			from mail_message a 
+			where a.message_type in ('comment','email') 
+			and a.id not in (select message_id from mail_message_res_partner_rel) 
+			and a.id not in (select message_id from mail_mssage_res_partner_starred_rel)
 	        	""")
                                                  
