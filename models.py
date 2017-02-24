@@ -97,6 +97,16 @@ class mail_message(models.Model):
                 if self.parent_id:
                         self.original_author_id = self.parent_id.author_id.id
 
+	@api.one
+	def _compute_mail_type(self):
+		uid = self.env.context['uid']
+		user = self.env['res.users'].browse(uid)
+		if self.author_id.id == user.partner_id.id:
+			self.mail_type = 'outgoing'
+		else:
+			self.mail_type = 'incoming'
+
         partner_ids_char_v3 = fields.Char('Partners Char',compute=_compute_partner_ids_char_v3)
         mail_owner = fields.Boolean('Mail Owner',compute=_compute_mail_owner)
         original_author_id = fields.Many2one('res.partner',string='Original Author',compute=_compute_original_author_id,store=True)
+	mail_type = fields.Selection(selection=[('incoming','Entrante'),('outgoing','Saliente')],compute=_compute_mail_type)

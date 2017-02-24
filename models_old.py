@@ -136,7 +136,9 @@ class as_mail_message(osv.osv):
 		'subject': fields.char('Asunto'),
 		'email_from': fields.char('Desde'),
 		'date': fields.date('Fecha'),
-		'body': fields.text('Contenido')
+		'body': fields.text('Contenido'),
+		'model': fields.char('Modelo'),
+		'res_id': fields.integer('Res ID'),
 		}
 
 	_order  = 'mail_message_id desc, date desc'
@@ -146,17 +148,17 @@ class as_mail_message(osv.osv):
 	        cr.execute("""
 			create view as_mail_message as 
 			select a.mail_message_id * a.res_partner_id as id,a.mail_message_id as mail_message_id,a.res_partner_id as res_partner_id,b.author_id as author_id,b.message_type as message_type, 
-			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body 
+			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body,b.model as model,b.res_id as res_id
 			from mail_message_res_partner_rel a inner join mail_message b on a.mail_message_id = b.id
 			where b.message_type in ('comment','email')
 			union
 			select a.mail_message_id * a.res_partner_id as id,a.mail_message_id as mail_message_id,a.res_partner_id as res_partner_id,b.author_id as author_id,b.message_type as message_type, 
-			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body
+			b.subject as subject, b.email_from as email_from,b.date as date,b.body as body,b.model as model,b.res_id as res_id
 			from mail_message_res_partner_starred_rel a inner join mail_message b on a.mail_message_id = b.id
 			where b.message_type in ('comment','email')
 			union
 			select a.id * a.author_id as id,a.id as mail_message_id,b.author_id as res_partner_id,a.author_id as author_id,a.message_type as message_type, 
-			a.subject as subject, a.email_from as email_from,a.date as date,a.body as body
+			a.subject as subject, a.email_from as email_from,a.date as date,a.body as body,b.model as model,b.res_id as res_id
 			from mail_message a inner join mail_message b on a.parent_id = b.id 
 			where a.message_type in ('comment','email') 
 			and a.id not in (select mail_message_id from mail_message_res_partner_rel) 

@@ -21,6 +21,7 @@
 			<group>
 				<field name="subject" />
 				<field name="date" readonly="1"/>
+				<field name="model" readonly="1"/>
 			</group>
 			<group string="Emisores y Destinatarios">
 				<field name="author_id" />
