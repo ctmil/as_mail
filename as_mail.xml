@@ -38,7 +38,7 @@
             <field name="name">as.mail.message.tree</field>
             <field name="model">as.mail.message</field>
             <field name="arch" type="xml">
-		<tree string="Mensajes">
+		<tree string="Mensajes" default_order="date desc">
 			<field name="date" />
 			<field name="author_id" />
 			<field name="res_partner_id" />

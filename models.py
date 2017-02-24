@@ -39,6 +39,7 @@ class mail_tracking_email(models.Model):
 
 class mail_message(models.Model):
         _inherit = 'mail.message'
+	_order = 'id desc'
 
 	"""	
 	@api.model
