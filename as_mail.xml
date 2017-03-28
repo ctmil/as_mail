@@ -46,6 +46,7 @@
 			<field name="email_from" />
 			<field name="subject" />
 			<field name="mail_message_id" />
+			<field name="state_email" />
 		</tree>
             </field>
         </record>
