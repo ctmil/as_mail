@@ -39,7 +39,8 @@
             <field name="name">as.mail.message.tree</field>
             <field name="model">as.mail.message</field>
             <field name="arch" type="xml">
-		<tree string="Mensajes" default_order="date desc">
+		<tree string="Mensajes" default_order="date desc" 
+			colors="grey:state_email in (False, 'deferred');black:state_email in ('sent', 'delivered');green:state_email in ('opened');red:state_email in ('rejected', 'spam', 'bounced', 'soft-bounced');blue:state_email in ('unsub')">
 			<field name="date" />
 			<field name="author_id" />
 			<field name="res_partner_id" />
