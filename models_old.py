@@ -53,11 +53,29 @@ class fetchmail_server(osv.osv):
         	    if server.type == 'imap':
                 	try:
 	                    imap_server = server.connect()
-        	            imap_server.select()
-			    date = (datetime.date.today() - datetime.timedelta(1)).strftime("%d-%b-%Y")
+        	            imap_server.select("INBOX")
+			    #date = (datetime.date.today() - datetime.timedelta(1)).strftime("%d-%b-%Y")
+			    date = (datetime.date.today() - datetime.timedelta(30)).strftime("%d-%b-%Y")
+                            date = date.replace('ene','Jan')
+                            date = date.replace('feb','Feb')
+                            date = date.replace('mar','Mar')
+                            date = date.replace('abr','Apr')
+                            date = date.replace('may','May')
+                            date = date.replace('jun','Jun')
+                            date = date.replace('jul','Jul')
+                            date = date.replace('ago','Aug')
+                            date = date.replace('sep','Sep')
+                            date = date.replace('oct','Oct')
+                            date = date.replace('nov','Nov')
+                            date = date.replace('dic','Dec')
+
 			    # result, data = mail.uid('search', None, '(SENTSINCE {date})'.format(date=date))
                 	    # result, data = imap_server.search(None, '(UNSEEN)')
+			    _logger.info('[DEBUG]')
+			    _logger.info(date)
                 	    result, data = imap_server.search(None, '(SENTSINCE {date})'.format(date=date))
+                	    #result, data = imap_server.search(None, '(SINCE {date})'.format(date=date))
+                	    #result, data = imap_server.search(None, '(SENTON {date})'.format(date=date))
 	                    for num in data[0].split():
         	                res_id = None
                 	        result, data = imap_server.fetch(num, '(RFC822)')
