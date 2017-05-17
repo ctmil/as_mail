@@ -24,7 +24,7 @@
     "init_xml": [],
     "data": [
 	'as_mail.xml',
-	'views/assets.xml',
+	#'views/assets.xml',
 	'security/as_mail_security.xml',
 	'security/ir.model.access.csv'
     ],
@@ -33,7 +33,7 @@
     'test':[
     ],
     'qweb': [
-	'static/src/xml/mail.xml'
+	#'static/src/xml/mail.xml'
 	],
     'installable': True,
     'active': False,
