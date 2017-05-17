@@ -29,6 +29,24 @@ MAIL_TIMEOUT = 60
 poplib._MAXLINE = 65536
 
 
+class mail_message(osv.osv):
+	_inherit = 'mail.message'
+
+	def resend(self, cr, uid, ids, context=None):
+		print "Resend"
+		message = self.pool.get('mail.message').browse(cr,uid,ids)
+		if message:
+			if message.partner_ids and message.subject \
+				and message.model == 'purchase.order' or message.model == 'sale.order':
+				res_id = message.res_id
+				post_vars = {'subject': message.subject, 'body': message.body, 'partner_ids': message.partner_ids.ids}
+
+				obj = self.pool.get(message.model).browse(cr,uid,res_id)
+				if obj:
+					res = self.pool.get(message.model).message_post(cr,uid,res_id,context={},**post_vars)
+
+mail_message()
+
 class fetchmail_server(osv.osv):
 	_inherit = 'fetchmail.server'
 

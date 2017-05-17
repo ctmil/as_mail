@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+	<t t-extend="mail.ChatThread.Message">
+		<!-- t t-jquery="div[class='o_thread_message']" t-operation="after" -->
+		<t t-jquery="p[class='o_mail_info']" t-operation="after">
+			<button type="button" class="btn btn-sm o_resend_message" 
+				t-att-data-message-id="message.id"
+				t-att-id="message.id"
+				> Re-Enviar Mensaje </button>
+		</t>
+	</t>
+
+</templates>

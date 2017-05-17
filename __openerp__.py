@@ -24,14 +24,17 @@
     "init_xml": [],
     "data": [
 	'as_mail.xml',
+	'views/assets.xml',
 	'security/as_mail_security.xml',
 	'security/ir.model.access.csv'
     ],
     'demo_xml': [
-	'as_mail.xml'
     ],
     'test':[
     ],
+    'qweb': [
+	'static/src/xml/mail.xml'
+	],
     'installable': True,
     'active': False,
     'certificate': '',

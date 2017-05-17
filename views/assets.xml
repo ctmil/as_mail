@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2017 Gustavo Orrillo - <gustavo.orrillo@moldeointeractive.com.ar>
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+
+<template id="assets_backend"
+          name="as_mail_assets"
+          inherit_id="web.assets_backend">
+    <xpath expr="." position="inside">
+        <script type="text/javascript"
+                src="/as_mail/static/src/js/as_mail.js"/>
+    </xpath>
+</template>
+
+</odoo>

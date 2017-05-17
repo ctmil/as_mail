@@ -106,6 +106,8 @@ class mail_message(models.Model):
 		else:
 			self.mail_type = 'incoming'
 
+
+
         partner_ids_char_v3 = fields.Char('Partners Char',compute=_compute_partner_ids_char_v3)
         mail_owner = fields.Boolean('Mail Owner',compute=_compute_mail_owner)
         original_author_id = fields.Many2one('res.partner',string='Original Author',compute=_compute_original_author_id,store=True)
