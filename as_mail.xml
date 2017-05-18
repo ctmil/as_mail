@@ -51,6 +51,22 @@
 		</tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="as_mail_message_tree_v2">
+            <field name="name">as.mail.message.tree</field>
+            <field name="model">as.mail.message</field>
+            <field name="arch" type="xml">
+		<tree string="Mensajes" default_order="date desc" 
+			colors="grey:state_email in (False, 'deferred');black:state_email in ('sent', 'delivered');green:state_email in ('opened');red:state_email in ('rejected', 'spam', 'bounced', 'soft-bounced');blue:state_email in ('unsub')">
+			<field name="date" />
+			<field name="author_id" />
+			<field name="res_partner_id" />
+			<field name="email_from" />
+			<field name="subject" />
+			<field name="mail_message_id" />
+			<field name="state_email" />
+		</tree>
+            </field>
+        </record>
 	  
         <record id="as_mail_action_view_as_mail_message" model="ir.actions.act_window">
             <field name="name">Messages</field>
@@ -67,7 +83,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <!-- field name="domain">['|',('author_id', '=', user.partner_id.id)]</field -->
-            <!-- field name="search_view_id" ref="mail.view_message_search"/ -->
+            <field name="view_id" ref="as_mail.as_mail_message_tree_v2"/>
         </record>
 
 
