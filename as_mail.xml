@@ -51,7 +51,7 @@
 		</tree>
             </field>
         </record>
-        <record model="ir.ui.view" id="as_mail_message_tree_v2">
+        <!-- record model="ir.ui.view" id="as_mail_message_tree_v2">
             <field name="name">as.mail.message.tree</field>
             <field name="model">as.mail.message</field>
             <field name="arch" type="xml">
@@ -66,25 +66,24 @@
 			<field name="state_email" />
 		</tree>
             </field>
-        </record>
+        </record -->
 	  
         <record id="as_mail_action_view_as_mail_message" model="ir.actions.act_window">
             <field name="name">Messages</field>
             <field name="res_model">as.mail.message</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <!-- field name="domain">['|',('author_id', '=', user.partner_id.id)]</field -->
+            <field name="domain">['|',('id', '>', 0)]</field>
             <!-- field name="search_view_id" ref="mail.view_message_search"/ -->
         </record>
 
-        <record id="as_mail_action_view_as_mail_message_v2" model="ir.actions.act_window">
+        <!-- record id="as_mail_action_view_as_mail_message_v2" model="ir.actions.act_window">
             <field name="name">Messages</field>
             <field name="res_model">as.mail.message</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <!-- field name="domain">['|',('author_id', '=', user.partner_id.id)]</field -->
             <field name="view_id" ref="as_mail.as_mail_message_tree_v2"/>
-        </record>
+        </record -->
 
 
         <menuitem id="menuitem_as_mail"
@@ -97,12 +96,11 @@
                 action="as_mail_action_view_as_mail_message"
                 />
 
-        <menuitem id="menuitem_as_mensajes_v2"
+        <!-- menuitem id="menuitem_as_mensajes_v2"
                 parent="as_mail.menuitem_as_mail"
                 name="Mensajes 2.0" 
                 action="as_mail_action_view_as_mail_message_v2"
-                />
-
+                / -->
 
    </data>
 </openerp>

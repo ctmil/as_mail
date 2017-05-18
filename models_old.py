@@ -39,7 +39,12 @@ class mail_message(osv.osv):
 			if message.partner_ids and message.subject \
 				and message.model == 'purchase.order' or message.model == 'sale.order':
 				res_id = message.res_id
-				post_vars = {'subject': message.subject, 'body': message.body, 'partner_ids': message.partner_ids.ids}
+				post_vars = {
+						'subject': message.subject, 
+						'body': message.body, 
+						'partner_ids': message.partner_ids.ids,
+						'attachment_ids': message.attachment_ids.ids
+						}
 
 				obj = self.pool.get(message.model).browse(cr,uid,res_id)
 				if obj:
